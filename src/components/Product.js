@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -10,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AddShoppingCart } from '@mui/icons-material';
+import accounting from 'accounting';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -22,7 +24,15 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
+const useStyles = makeStyles(() => ({
+  root: { maxWidth: 345, },
+  action: { marginTop: "1rem" },
+  media: { paddingTop: "56,25%", }, // 16:9
+}));
+
+
 export default function Product() {
+  const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -34,11 +44,11 @@ export default function Product() {
   }
 
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card className={classes.root}>
       <CardHeader
         action={
-          <Typography variant="h5" color="text.secondary" aria-label="price">
-            $50
+          <Typography variant="h5" color="text.secondary" aria-label="price" className={classes.action}>
+            { accounting.formatMoney(50) }
           </Typography>
         }
         title="Shoes"
@@ -49,6 +59,7 @@ export default function Product() {
         height="194"
         image="https://s2.r29static.com/bin/entry/ebd/0,675,2000,1050/x,80/1929471/image.jpg"
         alt="Nike shoes"
+        className={classes.media}
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
